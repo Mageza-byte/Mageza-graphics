@@ -1,0 +1,37 @@
+{
+  "files": {
+    "main.css": "/Mageza-graphics/static/css/main.34276139.css",
+    "main.js": "/Mageza-graphics/static/js/main.434760c3.js",
+    "static/js/913.0e516174.chunk.js": "/Mageza-graphics/static/js/913.0e516174.chunk.js",
+    "static/js/568.59aced78.chunk.js": "/Mageza-graphics/static/js/568.59aced78.chunk.js",
+    "static/js/233.98ef42f7.chunk.js": "/Mageza-graphics/static/js/233.98ef42f7.chunk.js",
+    "static/js/894.ffebbc68.chunk.js": "/Mageza-graphics/static/js/894.ffebbc68.chunk.js",
+    "static/js/684.1029e668.chunk.js": "/Mageza-graphics/static/js/684.1029e668.chunk.js",
+    "static/js/887.b2ff6437.chunk.js": "/Mageza-graphics/static/js/887.b2ff6437.chunk.js",
+    "static/js/518.8edc4ae6.chunk.js": "/Mageza-graphics/static/js/518.8edc4ae6.chunk.js",
+    "static/js/714.ed58ad1e.chunk.js": "/Mageza-graphics/static/js/714.ed58ad1e.chunk.js",
+    "static/js/81.696ff986.chunk.js": "/Mageza-graphics/static/js/81.696ff986.chunk.js",
+    "static/js/425.9b04827d.chunk.js": "/Mageza-graphics/static/js/425.9b04827d.chunk.js",
+    "static/js/453.1ac2290f.chunk.js": "/Mageza-graphics/static/js/453.1ac2290f.chunk.js",
+    "static/js/758.4075ad92.chunk.js": "/Mageza-graphics/static/js/758.4075ad92.chunk.js",
+    "index.html": "/Mageza-graphics/index.html",
+    "main.34276139.css.map": "/Mageza-graphics/static/css/main.34276139.css.map",
+    "main.434760c3.js.map": "/Mageza-graphics/static/js/main.434760c3.js.map",
+    "913.0e516174.chunk.js.map": "/Mageza-graphics/static/js/913.0e516174.chunk.js.map",
+    "568.59aced78.chunk.js.map": "/Mageza-graphics/static/js/568.59aced78.chunk.js.map",
+    "233.98ef42f7.chunk.js.map": "/Mageza-graphics/static/js/233.98ef42f7.chunk.js.map",
+    "894.ffebbc68.chunk.js.map": "/Mageza-graphics/static/js/894.ffebbc68.chunk.js.map",
+    "684.1029e668.chunk.js.map": "/Mageza-graphics/static/js/684.1029e668.chunk.js.map",
+    "887.b2ff6437.chunk.js.map": "/Mageza-graphics/static/js/887.b2ff6437.chunk.js.map",
+    "518.8edc4ae6.chunk.js.map": "/Mageza-graphics/static/js/518.8edc4ae6.chunk.js.map",
+    "714.ed58ad1e.chunk.js.map": "/Mageza-graphics/static/js/714.ed58ad1e.chunk.js.map",
+    "81.696ff986.chunk.js.map": "/Mageza-graphics/static/js/81.696ff986.chunk.js.map",
+    "425.9b04827d.chunk.js.map": "/Mageza-graphics/static/js/425.9b04827d.chunk.js.map",
+    "453.1ac2290f.chunk.js.map": "/Mageza-graphics/static/js/453.1ac2290f.chunk.js.map",
+    "758.4075ad92.chunk.js.map": "/Mageza-graphics/static/js/758.4075ad92.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.34276139.css",
+    "static/js/main.434760c3.js"
+  ]
+}
