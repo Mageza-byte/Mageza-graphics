@@ -1,0 +1,46 @@
+/* Global CSS variables and resets for consistent theming */
+:root {
+  --color-primary: #2d89ef;
+  --color-secondary: #43b581;
+  --color-accent: #fbbc05;
+  --color-background: #f8f9fa;
+  --color-dark: #181a1b;
+  --color-text: #222;
+  --color-text-light: #f8f9fa;
+  --color-error: #e1306c;
+  --font-family: 'Segoe UI', Montserrat, Arial, sans-serif;
+  --border-radius: 12px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  background: var(--color-background);
+  color: var(--color-text);
+  font-size: 16px;
+  min-height: 100vh;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+}
+
+button:focus, input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+[aria-live] {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
