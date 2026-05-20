@@ -1,19 +1,20 @@
 import React from 'react';
+import magezaLogo from './mageza-logo.png';
 
 
 const team = [
   {
-    name: 'James Mageza',
-    initials: 'JM',
+    name: 'Mike Washaya',
+    initials: 'MM',
     color: '#2d89ef',
     title: 'Founder & Lead Designer',
     photo: 'https://randomuser.me/api/portraits/men/32.jpg',
-    qualifications: 'BSc (Hons) Graphic Design, UZ',
+    qualifications: 'Msc Computer Science, NUST',
     experience: '10+ years in branding, digital art, and creative direction. Led 100+ successful projects for startups and corporates.'
   },
   {
-    name: 'Alice K.',
-    initials: 'AK',
+    name: 'Promise Washaya',
+    initials: 'PW',
     color: '#43b581',
     title: 'ICT Support Specialist',
     photo: 'https://randomuser.me/api/portraits/women/44.jpg',
@@ -21,8 +22,8 @@ const team = [
     experience: '7 years in ICT support, networking, and systems admin. Certified Cisco and Microsoft specialist.'
   },
   {
-    name: 'Brian M.',
-    initials: 'BM',
+    name: 'Prince Washaya',
+    initials: 'PW',
     color: '#fbbc05',
     title: 'Tutor & Developer',
     photo: 'https://randomuser.me/api/portraits/men/65.jpg',

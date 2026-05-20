@@ -1,6 +1,18 @@
 
 import React, { useState } from 'react';
 import { iconMap } from './ContactIcons';
+import { useFormValidation } from './hooks/useFormValidation';
+import magezaLogo from './mageza-logo.png';
+
+const validateContactForm = (values) => {
+  const errors = {};
+  if (!values.name?.trim()) errors.name = 'Name is required';
+  if (!values.email?.trim()) errors.email = 'Email is required';
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) errors.email = 'Invalid email address';
+  if (!values.message?.trim()) errors.message = 'Message is required';
+  if (values.message?.trim().length < 10) errors.message = 'Message must be at least 10 characters';
+  return errors;
+};
 
 const contacts = [
   {
@@ -48,10 +60,17 @@ const contacts = [
 ];
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
+  const form = useFormValidation(
+    { name: '', email: '', message: '' },
+    async (values) => {
+      // Simulate API call
+      await new Promise(r => setTimeout(r, 1500));
+      console.log('Form submitted:', values);
+    },
+    validateContactForm
+  );
+
   const [copied, setCopied] = useState('');
-  const [showConfetti, setShowConfetti] = useState(false);
   const [activeFAQ, setActiveFAQ] = useState(null);
 
   const faqs = [
@@ -105,18 +124,6 @@ export default function ContactPage() {
     }
   ];
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setForm({ name: '', email: '', message: '' });
-    setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 1800);
-  };
-
   const handleCopy = (text, type) => {
     navigator.clipboard.writeText(text);
     setCopied(type);
@@ -135,31 +142,7 @@ export default function ContactPage() {
       overflow: 'hidden',
       animation: 'fadeInUp 1.2s cubic-bezier(.23,1.01,.32,1)'
     }}>
-      {/* Confetti effect on submit */}
-      {showConfetti && (
-        <div style={{
-          position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 10,
-          animation: 'confetti-fall 1.5s linear'
-        }}>
-          {[...Array(24)].map((_, i) => (
-            <span key={i} style={{
-              position: 'absolute',
-              left: `${Math.random() * 100}%`,
-              top: '-20px',
-              fontSize: `${18 + Math.random() * 16}px`,
-              color: ['#2d89ef', '#43b581', '#fbbc05', '#e1306c', '#1da1f2'][i % 5],
-              opacity: 0.85,
-              animation: `confettiDrop 1.5s ${i * 0.05}s linear forwards`
-            }}>🎉</span>
-          ))}
-        </div>
-      )}
       <style>{`
-        @keyframes confettiDrop {
-          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-          80% { opacity: 1; }
-          100% { transform: translateY(420px) rotate(360deg); opacity: 0; }
-        }
         @keyframes fadeInUp {
           0% { opacity: 0; transform: translateY(40px) scale(0.98); }
           100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -195,7 +178,15 @@ export default function ContactPage() {
         }
       `}</style>
       {/* Logo at top of contact page */}
-
+      <img
+        src={magezaLogo}
+        alt="Mageza Graphics Logo"
+        onError={(e) => {
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = `${process.env.PUBLIC_URL}/mageza-logo.png`;
+        }}
+        className="contact-hero-logo"
+      />
       <h2 style={{ textAlign: 'center', fontSize: '2.2rem', color: '#2d2e32', marginBottom: 16, letterSpacing: 1, fontWeight: 700, textShadow: '0 2px 8px #2d89ef11' }} tabIndex={0} aria-label="Contact Us">Contact Us</h2>
       <p style={{ textAlign: 'center', color: '#444', marginBottom: 32, fontSize: 17, animation: 'fadeInUp 1.2s 0.2s both' }}>
         Reach out to us on your favorite platform, send a message, or visit us in person!
@@ -328,40 +319,158 @@ export default function ContactPage() {
         <div>65 Twentydales, Hatfield, Harare</div>
         <div style={{ marginTop: 8, fontWeight: 500 }}>Office Hours: <span style={{ color: '#2d89ef' }}>Mon - Fri, 8:00am - 5:00pm</span></div>
       </div>
-      {/* Contact Form */}
-      <form onSubmit={handleSubmit} className="contact-form-anim" style={{ marginTop: 36, maxWidth: 400, marginLeft: 'auto', marginRight: 'auto', background: '#f8f9fa', borderRadius: 16, padding: 24, boxShadow: '0 2px 8px #2d89ef11', position: 'relative', animation: 'fadeInUp 1.1s 0.3s both' }}>
+      {/* Contact Form with Enhanced Validation */}
+      <form onSubmit={form.handleSubmit} className="contact-form-anim" style={{ marginTop: 36, maxWidth: 400, marginLeft: 'auto', marginRight: 'auto', background: '#f8f9fa', borderRadius: 16, padding: 24, boxShadow: '0 2px 8px #2d89ef11', position: 'relative', animation: 'fadeInUp 1.1s 0.3s both' }}>
         <h3 style={{ textAlign: 'center', marginBottom: 18, color: '#2d2e32' }}>Send us a message</h3>
-        <input
-          type="text"
-          name="name"
-          placeholder="Your Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-          style={{ width: '100%', padding: 10, marginBottom: 12, borderRadius: 8, border: '1px solid #ccc', fontSize: 15 }}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-          style={{ width: '100%', padding: 10, marginBottom: 12, borderRadius: 8, border: '1px solid #ccc', fontSize: 15 }}
-        />
-        <textarea
-          name="message"
-          placeholder="Your Message"
-          value={form.message}
-          onChange={handleChange}
-          required
-          rows={4}
-          style={{ width: '100%', padding: 10, marginBottom: 12, borderRadius: 8, border: '1px solid #ccc', fontSize: 15 }}
-        />
-        <button type="submit" style={{ width: '100%', background: 'linear-gradient(90deg, #2d89ef 0%, #43b581 100%)', color: '#fff', border: 'none', borderRadius: 8, padding: 12, fontWeight: 600, fontSize: 16, cursor: 'pointer', boxShadow: '0 2px 8px #2d89ef22' }}>Send</button>
-        {submitted && <div style={{ color: '#43b581', marginTop: 12, textAlign: 'center', fontWeight: 500, fontSize: 16 }}>Thank you! Your message has been sent.</div>}
+        
+        {/* Name Field */}
+        <div style={{ marginBottom: 16 }}>
+          <label htmlFor="name" style={{ display: 'block', fontWeight: 600, marginBottom: 6, color: '#2d2e32', fontSize: 14 }}>Name *</label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            placeholder="Your Full Name"
+            value={form.values.name}
+            onChange={form.handleChange}
+            onBlur={form.handleBlur}
+            aria-invalid={form.touched.name && !!form.errors.name ? 'true' : 'false'}
+            aria-describedby={form.errors.name ? 'name-error' : undefined}
+            style={{
+              width: '100%',
+              padding: '10px 12px',
+              borderRadius: 8,
+              border: form.touched.name && form.errors.name ? '2px solid #e1306c' : '1px solid #ccc',
+              fontSize: 15,
+              boxSizing: 'border-box',
+              background: form.touched.name && form.errors.name ? '#ffe3ec' : '#fff',
+              transition: 'all 0.2s',
+            }}
+          />
+          {form.touched.name && form.errors.name && (
+            <div id="name-error" style={{ color: '#e1306c', fontSize: 13, marginTop: 4, fontWeight: 500 }}>
+              ✗ {form.errors.name}
+            </div>
+          )}
+        </div>
+
+        {/* Email Field */}
+        <div style={{ marginBottom: 16 }}>
+          <label htmlFor="email" style={{ display: 'block', fontWeight: 600, marginBottom: 6, color: '#2d2e32', fontSize: 14 }}>Email *</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="your.email@example.com"
+            value={form.values.email}
+            onChange={form.handleChange}
+            onBlur={form.handleBlur}
+            aria-invalid={form.touched.email && !!form.errors.email ? 'true' : 'false'}
+            aria-describedby={form.errors.email ? 'email-error' : undefined}
+            style={{
+              width: '100%',
+              padding: '10px 12px',
+              borderRadius: 8,
+              border: form.touched.email && form.errors.email ? '2px solid #e1306c' : '1px solid #ccc',
+              fontSize: 15,
+              boxSizing: 'border-box',
+              background: form.touched.email && form.errors.email ? '#ffe3ec' : '#fff',
+              transition: 'all 0.2s',
+            }}
+          />
+          {form.touched.email && form.errors.email && (
+            <div id="email-error" style={{ color: '#e1306c', fontSize: 13, marginTop: 4, fontWeight: 500 }}>
+              ✗ {form.errors.email}
+            </div>
+          )}
+        </div>
+
+        {/* Message Field */}
+        <div style={{ marginBottom: 18 }}>
+          <label htmlFor="message" style={{ display: 'block', fontWeight: 600, marginBottom: 6, color: '#2d2e32', fontSize: 14 }}>Message *</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Tell us how we can help you..."
+            value={form.values.message}
+            onChange={form.handleChange}
+            onBlur={form.handleBlur}
+            aria-invalid={form.touched.message && !!form.errors.message ? 'true' : 'false'}
+            aria-describedby={form.errors.message ? 'message-error' : undefined}
+            rows={4}
+            style={{
+              width: '100%',
+              padding: '10px 12px',
+              borderRadius: 8,
+              border: form.touched.message && form.errors.message ? '2px solid #e1306c' : '1px solid #ccc',
+              fontSize: 15,
+              boxSizing: 'border-box',
+              fontFamily: 'inherit',
+              resize: 'vertical',
+              minHeight: 120,
+              background: form.touched.message && form.errors.message ? '#ffe3ec' : '#fff',
+              transition: 'all 0.2s',
+            }}
+          />
+          <div style={{ fontSize: 12, color: '#888', marginTop: 4 }}>
+            {form.values.message.length}/500 characters
+          </div>
+          {form.touched.message && form.errors.message && (
+            <div id="message-error" style={{ color: '#e1306c', fontSize: 13, marginTop: 4, fontWeight: 500 }}>
+              ✗ {form.errors.message}
+            </div>
+          )}
+        </div>
+
+        {/* Submission Feedback */}
+        {form.submitSuccess && (
+          <div style={{ background: '#e8f5e9', color: '#2e7d32', padding: 12, borderRadius: 8, marginBottom: 16, fontSize: 14, fontWeight: 500, animation: 'slideInDown 0.3s ease' }}>
+            ✓ Message sent successfully! We'll reply shortly.
+          </div>
+        )}
+        {form.errors.submit && (
+          <div style={{ background: '#ffe3ec', color: '#c2185b', padding: 12, borderRadius: 8, marginBottom: 16, fontSize: 14, fontWeight: 500 }}>
+            ✗ {form.errors.submit}
+          </div>
+        )}
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={form.isSubmitting}
+          style={{
+            width: '100%',
+            padding: '12px 24px',
+            background: form.isSubmitting
+              ? '#ccc'
+              : 'linear-gradient(90deg, #2d89ef 60%, #43b581 100%)',
+            color: '#fff',
+            fontWeight: 700,
+            fontSize: 16,
+            borderRadius: 8,
+            border: 'none',
+            cursor: form.isSubmitting ? 'not-allowed' : 'pointer',
+            transition: 'all 0.3s',
+            boxShadow: form.isSubmitting ? 'none' : '0 4px 12px #2d89ef33',
+          }}
+          onMouseEnter={e => {
+            if (!form.isSubmitting) {
+              e.target.style.background = 'linear-gradient(90deg, #43b581 60%, #2d89ef 100%)';
+              e.target.style.transform = 'translateY(-2px)';
+            }
+          }}
+          onMouseLeave={e => {
+            if (!form.isSubmitting) {
+              e.target.style.background = 'linear-gradient(90deg, #2d89ef 60%, #43b581 100%)';
+              e.target.style.transform = 'translateY(0)';
+            }
+          }}
+        >
+          {form.isSubmitting ? 'Sending...' : 'Send Message'}
+        </button>
       </form>
-      {/* Interactive FAQ Section */}
+
+      {/* FAQ Section */}
       <div style={{ marginTop: 40 }}>
         <h3 style={{ textAlign: 'center', color: '#2d2e32', marginBottom: 16 }}>Frequently Asked Questions</h3>
         <ul style={{ maxWidth: 500, margin: '0 auto', textAlign: 'left', color: '#444', fontSize: 15, lineHeight: 1.7, padding: 0, listStyle: 'none' }}>

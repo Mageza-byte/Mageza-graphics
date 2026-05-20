@@ -1,6 +1,7 @@
 import React from 'react';
 import './global.css';
 import { Suspense, lazy } from 'react';
+import magezaLogo from './mageza-logo.png';
 const HeroSection = lazy(() => import('./HeroSection'));
 const FeatureCard = lazy(() => import('./FeatureCard'));
 const ContactPage = lazy(() => import('./ContactPage'));
@@ -86,6 +87,25 @@ function App() {
         position: 'relative',
         zIndex: 10
       }}>
+        {/* Mageza Graphics Logo */}
+        <img
+          src={magezaLogo}
+          alt="Mageza Graphics Logo"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = `${process.env.PUBLIC_URL}/mageza-logo.png`;
+          }}
+          style={{
+            width: 110,
+            height: 'auto',
+            margin: '1.2rem 0 0.2rem 0',
+            borderRadius: 18,
+            boxShadow: '0 2px 12px #2d89ef22',
+            background: '#fff',
+            display: 'block',
+            animation: 'logoPop 1.1s cubic-bezier(.23,1.01,.32,1)'
+          }}
+        />
         <div
           style={{
             fontFamily: 'Montserrat, Segoe UI, sans-serif',
